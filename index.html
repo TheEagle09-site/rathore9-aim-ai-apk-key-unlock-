@@ -310,17 +310,10 @@ h2{
   margin-top:4px;
 }
 
-footer{
-  text-align:center;
-  color:#555;
-  font-size:10px;
-  letter-spacing:1px;
-  margin-top:30px;
-}
-
 
 /* ========================================
    KEY UNLOCK
+   HIDDEN UNTIL ALL 3 TASKS COMPLETE
 ======================================== */
 
 .key-section{
@@ -487,6 +480,17 @@ footer{
 }
 
 
+/* FOOTER */
+
+footer{
+  text-align:center;
+  color:#555;
+  font-size:10px;
+  letter-spacing:1px;
+  margin-top:30px;
+}
+
+
 /* MOBILE */
 
 @media(max-width:600px){
@@ -597,7 +601,7 @@ footer{
 
 
 <!-- ========================================
-     YOUTUBE TASK
+     TASK 01 - YOUTUBE
 ======================================== -->
 
 <div
@@ -639,11 +643,9 @@ footer{
     </div>
 
     <p class="description">
-
       First open our YouTube channel and
       subscribe. After opening, the Verify
       button will appear.
-
     </p>
 
     <div class="buttons">
@@ -658,7 +660,6 @@ footer{
         Open YouTube ↗
 
       </a>
-
 
       <button
         class="btn verify hidden"
@@ -705,7 +706,7 @@ footer{
 
 
 <!-- ========================================
-     INSTAGRAM TASK
+     TASK 02 - INSTAGRAM
 ======================================== -->
 
 <div
@@ -747,11 +748,9 @@ footer{
     </div>
 
     <p class="description">
-
       Follow our Instagram profile.
       Open the profile first, then Verify
       will appear.
-
     </p>
 
     <div class="buttons">
@@ -766,7 +765,6 @@ footer{
         Open Instagram ↗
 
       </a>
-
 
       <button
         class="btn verify hidden"
@@ -813,7 +811,7 @@ footer{
 
 
 <!-- ========================================
-     TELEGRAM TASK
+     TASK 03 - TELEGRAM
 ======================================== -->
 
 <div
@@ -855,11 +853,9 @@ footer{
     </div>
 
     <p class="description">
-
       Join our Telegram channel and
       open the task. Then Verify will
       appear.
-
     </p>
 
     <div class="buttons">
@@ -874,7 +870,6 @@ footer{
         Open Telegram ↗
 
       </a>
-
 
       <button
         class="btn verify hidden"
@@ -921,10 +916,42 @@ footer{
 
 
 <!-- ========================================
-     KEY UNLOCK BUTTON
+     ALL TASKS COMPLETE MESSAGE
 ======================================== -->
 
-<div class="key-section">
+<div
+  class="complete"
+  id="complete"
+  style="display:none;">
+
+  <div class="complete-icon">
+    🦅
+  </div>
+
+  <div>
+
+    <strong>
+      All Tasks Completed!
+    </strong>
+
+    <p>
+      Thanks for supporting THE EAGLE⁰⁹.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- ========================================
+     KEY UNLOCK
+     INITIALLY HIDDEN
+======================================== -->
+
+<div
+  class="key-section"
+  id="keySection"
+  style="display:none;">
 
   <button
     class="key-unlock"
@@ -1025,34 +1052,6 @@ footer{
 </div>
 
 
-<!-- ========================================
-     COMPLETE
-======================================== -->
-
-<div
-  class="complete"
-  id="complete"
-  style="display:none;">
-
-  <div class="complete-icon">
-    🦅
-  </div>
-
-  <div>
-
-    <strong>
-      All Tasks Completed!
-    </strong>
-
-    <p>
-      Thanks for supporting THE EAGLE⁰⁹.
-    </p>
-
-  </div>
-
-</div>
-
-
 <footer>
   THE EAGLE⁰⁹ • OFFICIAL TASK CENTER
 </footer>
@@ -1066,11 +1065,9 @@ footer{
 let completed = 0;
 
 
-/*
-========================================
-OPEN TASK
-========================================
-*/
+/* ========================================
+   OPEN TASK
+======================================== */
 
 function openTask(index){
 
@@ -1084,7 +1081,6 @@ function openTask(index){
   const status =
     document.getElementById("status" + index);
 
-
   verify.classList.remove("hidden");
 
   status.innerText =
@@ -1093,18 +1089,15 @@ function openTask(index){
 }
 
 
-/*
-========================================
-VERIFY TASK
-========================================
-*/
+/* ========================================
+   VERIFY TASK
+======================================== */
 
 function verifyTask(index){
 
   if(index !== completed){
     return;
   }
-
 
   const verify =
     document.getElementById("verify" + index);
@@ -1139,16 +1132,15 @@ function verifyTask(index){
 
         clearInterval(interval);
 
-
         timer.style.display =
           "none";
 
-
         completed++;
-
 
         updateProgress();
 
+
+        /* SCROLL TO NEXT TASK */
 
         if(completed < 3){
 
@@ -1174,11 +1166,9 @@ function verifyTask(index){
 }
 
 
-/*
-========================================
-UPDATE UI
-========================================
-*/
+/* ========================================
+   UPDATE UI
+======================================== */
 
 function updateProgress(){
 
@@ -1212,9 +1202,7 @@ function updateProgress(){
       );
 
 
-    /*
-    COMPLETED
-    */
+    /* COMPLETED */
 
     if(i < completed){
 
@@ -1232,9 +1220,7 @@ function updateProgress(){
     }
 
 
-    /*
-    CURRENT TASK
-    */
+    /* CURRENT TASK */
 
     else if(i === completed){
 
@@ -1248,9 +1234,7 @@ function updateProgress(){
     }
 
 
-    /*
-    LOCKED
-    */
+    /* LOCKED */
 
     else{
 
@@ -1268,26 +1252,44 @@ function updateProgress(){
   }
 
 
-  /*
-  ALL COMPLETED
-  */
+  /* ========================================
+     ALL 3 TASKS COMPLETED
+     SHOW COMPLETE + KEY UNLOCK
+  ======================================== */
+
+  const completeBox =
+    document.getElementById("complete");
+
+  const keySection =
+    document.getElementById("keySection");
+
 
   if(completed === 3){
 
-    document.getElementById(
-      "complete"
-    ).style.display = "flex";
+    completeBox.style.display =
+      "flex";
+
+    keySection.style.display =
+      "block";
+
+  }
+
+  else{
+
+    completeBox.style.display =
+      "none";
+
+    keySection.style.display =
+      "none";
 
   }
 
 }
 
 
-/*
-========================================
-KEY UNLOCK
-========================================
-*/
+/* ========================================
+   KEY UNLOCK POPUP
+======================================== */
 
 function openKey(){
 
@@ -1307,11 +1309,9 @@ function closeKey(){
 }
 
 
-/*
-========================================
-COPY USERNAME / PASSWORD
-========================================
-*/
+/* ========================================
+   COPY USERNAME / PASSWORD
+======================================== */
 
 function copyText(id, button){
 
@@ -1319,70 +1319,87 @@ function copyText(id, button){
     document.getElementById(id).innerText;
 
 
-  navigator.clipboard.writeText(text)
-    .then(function(){
+  if(navigator.clipboard){
 
-      const oldText =
-        button.innerText;
+    navigator.clipboard
+      .writeText(text)
+      .then(function(){
 
+        showCopied(button);
 
-      button.innerText =
-        "Copied ✓";
+      })
+      .catch(function(){
 
+        fallbackCopy(text, button);
 
-      setTimeout(function(){
+      });
 
-        button.innerText =
-          oldText;
+  }
 
-      },1500);
+  else{
 
-    })
-    .catch(function(){
+    fallbackCopy(text, button);
 
-      /*
-      Fallback for browsers where
-      Clipboard API is unavailable.
-      */
-
-      const textarea =
-        document.createElement("textarea");
-
-      textarea.value = text;
-
-      document.body.appendChild(textarea);
-
-      textarea.select();
-
-      document.execCommand("copy");
-
-      textarea.remove();
-
-
-      const oldText =
-        button.innerText;
-
-      button.innerText =
-        "Copied ✓";
-
-
-      setTimeout(function(){
-
-        button.innerText =
-          oldText;
-
-      },1500);
-
-    });
+  }
 
 }
 
 
-/*
-========================================
-CLICK OUTSIDE POPUP = CLOSE
-========================================
-*/
+/* FALLBACK COPY */
+
+function fallbackCopy(text, button){
+
+  const textarea =
+    document.createElement("textarea");
+
+  textarea.value =
+    text;
+
+  textarea.style.position =
+    "fixed";
+
+  textarea.style.opacity =
+    "0";
+
+  document.body.appendChild(
+    textarea
+  );
+
+  textarea.select();
+
+  document.execCommand("copy");
+
+  textarea.remove();
+
+  showCopied(button);
+
+}
+
+
+/* COPIED MESSAGE */
+
+function showCopied(button){
+
+  const oldText =
+    button.innerText;
+
+  button.innerText =
+    "Copied ✓";
+
+
+  setTimeout(function(){
+
+    button.innerText =
+      oldText;
+
+  },1500);
+
+}
+
+
+/* ========================================
+   CLICK OUTSIDE POPUP = CLOSE
+======================================== */
 
 document
   .getElementById("keyOverlay")
@@ -1400,15 +1417,13 @@ document
   );
 
 
-/*
-========================================
-INITIAL LOAD
-========================================
-*/
+/* ========================================
+   INITIAL LOAD
+======================================== */
 
 updateProgress();
 
 </script>
 
 </body>
-  </html>
+</html>
